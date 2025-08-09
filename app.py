@@ -13,9 +13,20 @@ with open('gurjari_data.json', 'r', encoding='utf-8') as f:
 def find_translation(query):
     query = query.lower().strip()
     for entry in vocabulary:
+        english = entry.get('english', '').lower()
+        hindi = entry.get('hindi', '').lower()
+        if query in english or query in hindi:
+            return f"Gurjari: {entry.get('gurjari', '—')}\nPronunciation: {entry.get('pronunciation', '—')}\nMeaning: {english}"
+    return "Sorry, I couldn't find that word."
+
+'''
+def find_translation(query):
+    query = query.lower().strip()
+    for entry in vocabulary:
         if query in entry['english'].lower() or query in entry.get('hindi', '').lower():
             return f"Gurjari: {entry['gurjari']}\nPronunciation: {entry['pronunciation']}\nMeaning: {entry['english']}"
     return "Sorry, I couldn't find that word."
+'''
 
 # Root route
 @app.route('/')
